@@ -1,0 +1,498 @@
+{
+  "version": 1,
+  "origin": "sandbox.rightech.io",
+  "time": "2021-04-15T12:24:46.026Z",
+  "user": "60490ec253072efc4bfd2252",
+  "group": "60490ec253072efc4bfd2251",
+  "store": "models",
+  "data": {
+    "_id": "60782ed2402c0600103916e6",
+    "name": "Система управления шахтой",
+    "base": "mqtt",
+    "data": {
+      "id": "root",
+      "name": "Система управления шахтой",
+      "active": true,
+      "type": "subsystem",
+      "children": [
+        {
+          "id": "external-software-modules",
+          "active": true,
+          "copy": true,
+          "type": "subsystem",
+          "children": [],
+          "name": "External software modules"
+        },
+        {
+          "id": "params",
+          "name": "Параметры системы управления шахтой",
+          "active": true,
+          "type": "subsystem",
+          "children": [
+            {
+              "id": "server-info",
+              "name": "Server information",
+              "active": true,
+              "type": "subsystem",
+              "children": [
+                {
+                  "id": "online",
+                  "name": "Online",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "boolean",
+                  "reference": "online",
+                  "_parentId": "server-info"
+                },
+                {
+                  "id": "_ts",
+                  "name": "Time",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "unit": "duration-microsecond",
+                  "reference": "_ts",
+                  "_parentId": "server-info"
+                }
+              ]
+            },
+            {
+              "id": "mine_params",
+              "name": "Параметры",
+              "_localId": "llruz",
+              "active": true,
+              "type": "subsystem",
+              "expanded": false,
+              "children": [
+                {
+                  "id": "electro",
+                  "name": "Электропитание подано",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "boolean",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "unit": null,
+                  "children": [
+                    {
+                      "id": "electro.levels.0",
+                      "name": "False",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": false,
+                      "color": "#f16059"
+                    },
+                    {
+                      "id": "electro.levels.1",
+                      "name": "True",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": true,
+                      "color": "#a2ce4b"
+                    }
+                  ]
+                },
+                {
+                  "id": "ventilation",
+                  "name": "Вентиляция включена",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "boolean",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": null,
+                  "children": [
+                    {
+                      "id": "electro-fcjak.levels.0",
+                      "name": "False",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": false,
+                      "color": "#f16059",
+                      "children": []
+                    },
+                    {
+                      "id": "electro-fcjak.levels.1",
+                      "name": "True",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": true,
+                      "color": "#a2ce4b",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "mine_params"
+                },
+                {
+                  "id": "buzzer",
+                  "name": "Сирена включена",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "boolean",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": null,
+                  "children": [
+                    {
+                      "id": "electro-fcjak-jhhkg.levels.0",
+                      "name": "False",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": false,
+                      "color": "#f16059",
+                      "children": []
+                    },
+                    {
+                      "id": "electro-fcjak-jhhkg.levels.1",
+                      "name": "True",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": true,
+                      "color": "#a2ce4b",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "mine_params"
+                },
+                {
+                  "id": "noise",
+                  "name": "Датчик шума",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": "decibel",
+                  "children": [
+                    {
+                      "id": "electro-fcjak-jhhkg-ywei2.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 20,
+                      "color": "#fff",
+                      "children": []
+                    },
+                    {
+                      "id": "electro-fcjak-jhhkg-ywei2.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 300,
+                      "color": "#932df2",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "mine_params"
+                },
+                {
+                  "id": "temp0",
+                  "name": "Температура породы 1",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state",
+                  "unit": "temperature-celsius"
+                },
+                {
+                  "id": "temp1",
+                  "name": "Температура породы 2",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": false,
+                  "factor": 1,
+                  "unit": "temperature-celsius",
+                  "_parentId": "mine_params",
+                  "children": []
+                },
+                {
+                  "id": "move0",
+                  "name": "Движение породы 1",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "boolean",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "unit": null,
+                  "children": [
+                    {
+                      "id": "move0.levels.0",
+                      "name": "False",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": false,
+                      "color": "#a2ce4b"
+                    },
+                    {
+                      "id": "move0.levels.1",
+                      "name": "True",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": true,
+                      "color": "#f16059"
+                    }
+                  ]
+                },
+                {
+                  "id": "move1",
+                  "name": "Движение породы 2",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "boolean",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": null,
+                  "children": [
+                    {
+                      "id": "move0-6m1ex.levels.0",
+                      "name": "False",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": false,
+                      "color": "#a2ce4b",
+                      "children": []
+                    },
+                    {
+                      "id": "move0-6m1ex.levels.1",
+                      "name": "True",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": true,
+                      "color": "#f16059",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "mine_params"
+                },
+                {
+                  "id": "move2",
+                  "name": "Движение породы 3",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "boolean",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": null,
+                  "children": [
+                    {
+                      "id": "move0-6m1ex-bfh53.levels.0",
+                      "name": "False",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": false,
+                      "color": "#a2ce4b",
+                      "children": []
+                    },
+                    {
+                      "id": "move0-6m1ex-bfh53.levels.1",
+                      "name": "True",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": true,
+                      "color": "#f16059",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "mine_params"
+                },
+                {
+                  "id": "move3",
+                  "name": "Движение породы 4",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "boolean",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": null,
+                  "children": [
+                    {
+                      "id": "move0-6m1ex-bfh53-x1mgn.levels.0",
+                      "name": "False",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": false,
+                      "color": "#a2ce4b",
+                      "children": []
+                    },
+                    {
+                      "id": "move0-6m1ex-bfh53-x1mgn.levels.1",
+                      "name": "True",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": true,
+                      "color": "#f16059",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "mine_params"
+                }
+              ]
+            },
+            {
+              "id": "mqtt-last",
+              "name": "Last MQTT Publish",
+              "active": true,
+              "type": "subsystem",
+              "children": [
+                {
+                  "id": "topic",
+                  "name": "Topic",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "string",
+                  "reference": "topic",
+                  "_parentId": "mqtt-last"
+                },
+                {
+                  "id": "payload",
+                  "name": "Payload",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "string",
+                  "reference": "payload",
+                  "_parentId": "mqtt-last"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cmds",
+          "name": "Commands",
+          "active": true,
+          "type": "subsystem",
+          "children": [
+            {
+              "id": "led-on",
+              "name": "Turn-on LED",
+              "active": true,
+              "type": "action",
+              "service": "ric-gate",
+              "command": "publish",
+              "params": {
+                "topic": "base/relay/led1",
+                "payload": "1"
+              },
+              "description": null
+            },
+            {
+              "id": "led-off",
+              "name": "Turn-off LED",
+              "active": true,
+              "type": "action",
+              "service": "ric-gate",
+              "command": "publish",
+              "params": {
+                "topic": "base/relay/led1",
+                "payload": "0"
+              }
+            }
+          ]
+        }
+      ],
+      "_isRoot": true
+    },
+    "props": {
+      "bots": true,
+      "hardwareEvents": false,
+      "helper": {
+        "nostate": "@ric-docs/docs/helpers/mqtt.md"
+      },
+      "prefix": "",
+      "order": 1,
+      "typeInput": {
+        "hidden": false
+      },
+      "statusInput": {
+        "hidden": false
+      },
+      "descriptionInput": {
+        "hidden": false
+      },
+      "defaultNode": "temperature",
+      "protocol": "mqtt",
+      "idPattern": "mqtt-$tagname-$nanoid",
+      "namePattern": "mqtt-$tagname-$nanoid",
+      "idInput": {
+        "label": "ClientId"
+      },
+      "auth": {
+        "title": "mqtt_auth",
+        "fields": {
+          "username": {
+            "title": "mqtt_username"
+          },
+          "password": {
+            "secret": true,
+            "title": "mqtt_password"
+          }
+        }
+      },
+      "x509": {
+        "enabled": true
+      },
+      "parserParams": {
+        "saveBinaryAs": {
+          "ctrl": "Select",
+          "opts": {
+            "options": [
+              {
+                "value": "",
+                "label": "Text"
+              },
+              {
+                "value": "base64",
+                "label": "Base64"
+              },
+              {
+                "value": "hex",
+                "label": "HEX"
+              }
+            ]
+          },
+          "defaultValue": "",
+          "when": {
+            "==": [
+              {
+                "var": "node.dataType"
+              },
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
