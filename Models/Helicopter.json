@@ -1,0 +1,324 @@
+{
+  "version": 1,
+  "origin": "sandbox.rightech.io",
+  "time": "2021-04-15T12:35:38.280Z",
+  "user": "60490ec253072efc4bfd2252",
+  "group": "60490ec253072efc4bfd2251",
+  "store": "models",
+  "data": {
+    "_id": "60783176402c0600103916f0",
+    "name": "Система управления вертолетом",
+    "base": "mqtt",
+    "data": {
+      "id": "root",
+      "name": "Система управления вертолетом",
+      "active": true,
+      "type": "subsystem",
+      "children": [
+        {
+          "id": "external-software-modules",
+          "active": true,
+          "copy": true,
+          "type": "subsystem",
+          "children": [],
+          "name": "External software modules"
+        },
+        {
+          "id": "params",
+          "name": "Параметры системы управления вертолетом",
+          "active": true,
+          "type": "subsystem",
+          "children": [
+            {
+              "id": "server-info",
+              "name": "Server information",
+              "active": true,
+              "type": "subsystem",
+              "children": [
+                {
+                  "id": "online",
+                  "name": "Online",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "boolean",
+                  "reference": "online",
+                  "_parentId": "server-info"
+                },
+                {
+                  "id": "_ts",
+                  "name": "Time",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "unit": "duration-microsecond",
+                  "reference": "_ts",
+                  "_parentId": "server-info"
+                }
+              ]
+            },
+            {
+              "id": "helicopter_params",
+              "name": "Параметры",
+              "_localId": "7tb3b",
+              "active": true,
+              "type": "subsystem",
+              "expanded": false,
+              "children": [
+                {
+                  "id": "lat",
+                  "name": "Широта",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state",
+                  "unit": "angle-degree"
+                },
+                {
+                  "id": "lon",
+                  "name": "Долгота",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": false,
+                  "factor": 1,
+                  "unit": "angle-degree",
+                  "_parentId": "helicopter_params",
+                  "children": []
+                },
+                {
+                  "id": "fuel",
+                  "name": "Запас топлива",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "unit": "volume-liter",
+                  "children": [
+                    {
+                      "id": "fuel.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059"
+                    },
+                    {
+                      "id": "fuel.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 1500,
+                      "color": "#a2ce4b"
+                    }
+                  ]
+                },
+                {
+                  "id": "adc",
+                  "name": "Датчик уровня топлива",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "children": [
+                    {
+                      "id": "adc.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059"
+                    },
+                    {
+                      "id": "adc.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 5042,
+                      "color": "#a2ce4b"
+                    }
+                  ]
+                },
+                {
+                  "id": "buzzer",
+                  "name": "Сирена включена",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "boolean",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "unit": null,
+                  "children": [
+                    {
+                      "id": "buzzer.levels.0",
+                      "name": "False",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": false,
+                      "color": "#a2ce4b"
+                    },
+                    {
+                      "id": "buzzer.levels.1",
+                      "name": "True",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": true,
+                      "color": "#f16059"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "mqtt-last",
+              "name": "Last MQTT Publish",
+              "active": true,
+              "type": "subsystem",
+              "children": [
+                {
+                  "id": "topic",
+                  "name": "Topic",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "string",
+                  "reference": "topic",
+                  "_parentId": "mqtt-last"
+                },
+                {
+                  "id": "payload",
+                  "name": "Payload",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "string",
+                  "reference": "payload",
+                  "_parentId": "mqtt-last"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cmds",
+          "name": "Commands",
+          "active": true,
+          "type": "subsystem",
+          "children": [
+            {
+              "id": "buzzer_on",
+              "name": "Включить сирену",
+              "active": true,
+              "type": "action",
+              "service": "ric-gate",
+              "command": "publish",
+              "params": {
+                "topic": "base/helicopter/buzzer",
+                "payload": "1"
+              }
+            },
+            {
+              "id": "buzzer_off",
+              "name": "Выключить сирену",
+              "active": true,
+              "type": "action",
+              "service": "ric-gate",
+              "command": "publish",
+              "params": {
+                "topic": "base/helicopter/buzzer",
+                "payload": "0"
+              },
+              "children": []
+            }
+          ]
+        }
+      ],
+      "_isRoot": true
+    },
+    "props": {
+      "bots": true,
+      "hardwareEvents": false,
+      "helper": {
+        "nostate": "@ric-docs/docs/helpers/mqtt.md"
+      },
+      "prefix": "",
+      "order": 1,
+      "typeInput": {
+        "hidden": false
+      },
+      "statusInput": {
+        "hidden": false
+      },
+      "descriptionInput": {
+        "hidden": false
+      },
+      "defaultNode": "temperature",
+      "protocol": "mqtt",
+      "idPattern": "mqtt-$tagname-$nanoid",
+      "namePattern": "mqtt-$tagname-$nanoid",
+      "idInput": {
+        "label": "ClientId"
+      },
+      "auth": {
+        "title": "mqtt_auth",
+        "fields": {
+          "username": {
+            "title": "mqtt_username"
+          },
+          "password": {
+            "secret": true,
+            "title": "mqtt_password"
+          }
+        }
+      },
+      "x509": {
+        "enabled": true
+      },
+      "parserParams": {
+        "saveBinaryAs": {
+          "ctrl": "Select",
+          "opts": {
+            "options": [
+              {
+                "value": "",
+                "label": "Text"
+              },
+              {
+                "value": "base64",
+                "label": "Base64"
+              },
+              {
+                "value": "hex",
+                "label": "HEX"
+              }
+            ]
+          },
+          "defaultValue": "",
+          "when": {
+            "==": [
+              {
+                "var": "node.dataType"
+              },
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
