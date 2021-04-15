@@ -1,0 +1,1187 @@
+{
+  "version": 1,
+  "origin": "sandbox.rightech.io",
+  "time": "2021-04-15T12:13:14.272Z",
+  "user": "60490ec253072efc4bfd2252",
+  "group": "60490ec253072efc4bfd2251",
+  "store": "models",
+  "data": {
+    "_id": "6078213944cf570011ed2e67",
+    "name": "Система управления защитным костюмом",
+    "base": "mqtt",
+    "data": {
+      "id": "root",
+      "name": "Система управления защитным костюмом",
+      "active": true,
+      "type": "subsystem",
+      "children": [
+        {
+          "id": "external-software-modules",
+          "active": true,
+          "copy": true,
+          "type": "subsystem",
+          "children": [],
+          "name": "External software modules"
+        },
+        {
+          "id": "params",
+          "name": "Параметры защитного костюма",
+          "active": true,
+          "type": "subsystem",
+          "children": [
+            {
+              "id": "server-info",
+              "name": "Серверная информация",
+              "active": true,
+              "type": "subsystem",
+              "children": [
+                {
+                  "id": "online",
+                  "name": "Онлайн",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "boolean",
+                  "reference": "online",
+                  "_parentId": "server-info",
+                  "description": null
+                },
+                {
+                  "id": "_ts",
+                  "name": "Время",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "unit": "duration-microsecond",
+                  "reference": "_ts",
+                  "_parentId": "server-info",
+                  "description": null,
+                  "factor": 1,
+                  "linear": true
+                }
+              ]
+            },
+            {
+              "id": "costume_params",
+              "name": "Параметры костюма",
+              "_localId": "6spel",
+              "active": true,
+              "type": "subsystem",
+              "expanded": false,
+              "children": [
+                {
+                  "id": "active_state",
+                  "name": "Костюм активирован",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "boolean",
+                  "description": null,
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "unit": null
+                },
+                {
+                  "id": "charge",
+                  "name": "Уровень заряда",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "description": null,
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "charge.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059"
+                    },
+                    {
+                      "id": "charge.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b"
+                    }
+                  ]
+                },
+                {
+                  "id": "capacity",
+                  "name": "Емкость аккумулятора костюма",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state",
+                  "unit": "energy-kilowatt-hour"
+                },
+                {
+                  "id": "power",
+                  "name": "Мощность в течение часа",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": false,
+                  "factor": 1,
+                  "unit": "power-kilowatt",
+                  "_parentId": "costume_params",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "coords",
+              "name": "Координаты",
+              "_localId": "pstoq",
+              "active": true,
+              "type": "argument",
+              "expanded": false,
+              "source": "state",
+              "dataType": "number",
+              "linear": true,
+              "factor": 1,
+              "_parentId": "params",
+              "children": [
+                {
+                  "id": "x",
+                  "name": "X",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state",
+                  "unit": "length-meter"
+                },
+                {
+                  "id": "y",
+                  "name": "Y",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state",
+                  "unit": "length-meter"
+                },
+                {
+                  "id": "z",
+                  "name": "Z",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state",
+                  "unit": "length-meter"
+                }
+              ]
+            },
+            {
+              "id": "environment",
+              "name": "Окружающая среда",
+              "_localId": "9vre3",
+              "active": true,
+              "type": "subsystem",
+              "expanded": false,
+              "children": [
+                {
+                  "id": "humidity",
+                  "name": "Влажность",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "humidity.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059"
+                    },
+                    {
+                      "id": "humidity.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b"
+                    }
+                  ]
+                },
+                {
+                  "id": "oxygen",
+                  "name": "Кислород",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "oxygen.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059"
+                    },
+                    {
+                      "id": "oxygen.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b"
+                    }
+                  ]
+                },
+                {
+                  "id": "carbon",
+                  "name": "Углекислый газ",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "oxygen-ttz32.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059",
+                      "children": []
+                    },
+                    {
+                      "id": "oxygen-ttz32.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "environment"
+                },
+                {
+                  "id": "nitric",
+                  "name": "Оксид азота",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "oxygen-ttz32-2knax.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059",
+                      "children": []
+                    },
+                    {
+                      "id": "oxygen-ttz32-2knax.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "environment"
+                },
+                {
+                  "id": "sulfurous",
+                  "name": "Сернистый ангидрид",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "oxygen-ttz32-2knax-in8li.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059",
+                      "children": []
+                    },
+                    {
+                      "id": "oxygen-ttz32-2knax-in8li.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "environment"
+                },
+                {
+                  "id": "hydrogen_sulfide",
+                  "name": "Сероводород",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "oxygen-ttz32-2knax-in8li-p7kw7.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059",
+                      "children": []
+                    },
+                    {
+                      "id": "oxygen-ttz32-2knax-in8li-p7kw7.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "environment"
+                },
+                {
+                  "id": "methane",
+                  "name": "Метан",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "oxygen-ttz32-2knax-in8li-p7kw7-b2hm4.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059",
+                      "children": []
+                    },
+                    {
+                      "id": "oxygen-ttz32-2knax-in8li-p7kw7-b2hm4.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "environment"
+                },
+                {
+                  "id": "dust",
+                  "name": "Угольная пыль",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": true,
+                  "factor": 1,
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "oxygen-ttz32-2knax-in8li-p7kw7-b2hm4-vk24n.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059",
+                      "children": []
+                    },
+                    {
+                      "id": "oxygen-ttz32-2knax-in8li-p7kw7-b2hm4-vk24n.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b",
+                      "children": []
+                    }
+                  ],
+                  "_parentId": "environment"
+                }
+              ]
+            },
+            {
+              "id": "beacon",
+              "name": "Beacon",
+              "_localId": "3kldf",
+              "active": true,
+              "type": "subsystem",
+              "expanded": false,
+              "children": [
+                {
+                  "id": "beacons",
+                  "name": "Данные от Beacon",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "string",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state",
+                  "unit": null
+                },
+                {
+                  "id": "lat",
+                  "name": "Широта",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state",
+                  "unit": "angle-degree"
+                },
+                {
+                  "id": "lon",
+                  "name": "Долгота",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": false,
+                  "factor": 1,
+                  "unit": "angle-degree",
+                  "_parentId": "beacon",
+                  "children": []
+                },
+                {
+                  "id": "alt",
+                  "name": "Высота",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "number",
+                  "linear": false,
+                  "factor": 1,
+                  "unit": "angle-degree",
+                  "_parentId": "beacon",
+                  "children": []
+                },
+                {
+                  "id": "ev_time",
+                  "name": "Время события",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state",
+                  "unit": "duration-second"
+                },
+                {
+                  "id": "visible_count",
+                  "name": "Количество видимых устройств",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "children": [
+                    {
+                      "id": "visible_count.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#2d3945"
+                    },
+                    {
+                      "id": "visible_count.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 8,
+                      "color": "#fff"
+                    }
+                  ]
+                },
+                {
+                  "id": "rssi",
+                  "name": "RSSI",
+                  "_localId": "px42j",
+                  "active": true,
+                  "type": "subsystem",
+                  "expanded": false,
+                  "children": [
+                    {
+                      "id": "mac_98_12",
+                      "name": "RSSI 98:12",
+                      "_localId": "l0mki",
+                      "active": true,
+                      "type": "argument",
+                      "expanded": false,
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": true,
+                      "factor": 1,
+                      "_levels": [
+                        {
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "label": "Min"
+                        },
+                        {
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "label": "Max"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "id": "mac_98_12.levels.0",
+                          "name": "Min",
+                          "active": true,
+                          "type": "level",
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "expanded": false,
+                          "_localId": "5a193rk33fs3"
+                        },
+                        {
+                          "id": "mac_98_12.levels.1",
+                          "name": "Max",
+                          "active": true,
+                          "type": "level",
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "expanded": false,
+                          "_localId": "kewm8vqtkx5l"
+                        }
+                      ],
+                      "_parentId": "beacon"
+                    },
+                    {
+                      "id": "mac_0a_35",
+                      "name": "RSSI 0a:35",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": true,
+                      "factor": 1,
+                      "children": [
+                        {
+                          "id": "mac_98_12-dr6h3.levels.0",
+                          "name": "Min",
+                          "active": true,
+                          "type": "level",
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "children": [],
+                          "expanded": false,
+                          "_localId": "7bvg49ny621n"
+                        },
+                        {
+                          "id": "mac_98_12-dr6h3.levels.1",
+                          "name": "Max",
+                          "active": true,
+                          "type": "level",
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "children": [],
+                          "expanded": false,
+                          "_localId": "erdwknvmh6wp"
+                        }
+                      ],
+                      "_parentId": "beacon",
+                      "expanded": false,
+                      "_localId": "n48dj7gwu7tc",
+                      "_levels": [
+                        {
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "label": "Min"
+                        },
+                        {
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "label": "Max"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "mac_29_39",
+                      "name": "RSSI 29:39",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": true,
+                      "factor": 1,
+                      "children": [
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8.levels.0",
+                          "name": "Min",
+                          "active": true,
+                          "type": "level",
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "children": [],
+                          "expanded": false,
+                          "_localId": "yufnyqi93xgn"
+                        },
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8.levels.1",
+                          "name": "Max",
+                          "active": true,
+                          "type": "level",
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "children": [],
+                          "expanded": false,
+                          "_localId": "o7r4uy7wnvai"
+                        }
+                      ],
+                      "_parentId": "beacon",
+                      "expanded": true,
+                      "_localId": "b76ek2qp8rcc",
+                      "_levels": [
+                        {
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "label": "Min"
+                        },
+                        {
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "label": "Max"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "mac_d3_96",
+                      "name": "RSSI d3:96",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": true,
+                      "factor": 1,
+                      "children": [
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx.levels.0",
+                          "name": "Min",
+                          "active": true,
+                          "type": "level",
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "children": [],
+                          "expanded": false,
+                          "_localId": "499e8msz9mtk"
+                        },
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx.levels.1",
+                          "name": "Max",
+                          "active": true,
+                          "type": "level",
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "children": [],
+                          "expanded": false,
+                          "_localId": "ka77jwcpu34m"
+                        }
+                      ],
+                      "_parentId": "beacon",
+                      "expanded": true,
+                      "_localId": "567ojsxxw26x",
+                      "_levels": [
+                        {
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "label": "Min"
+                        },
+                        {
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "label": "Max"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "mac_f7_41",
+                      "name": "RSSI f7:41",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": true,
+                      "factor": 1,
+                      "children": [
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx-2u3ll.levels.0",
+                          "name": "Min",
+                          "active": true,
+                          "type": "level",
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "children": [],
+                          "expanded": false,
+                          "_localId": "jvo6hxwy9j5w"
+                        },
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx-2u3ll.levels.1",
+                          "name": "Max",
+                          "active": true,
+                          "type": "level",
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "children": [],
+                          "expanded": false,
+                          "_localId": "hmzj6aajsmq2"
+                        }
+                      ],
+                      "_parentId": "beacon",
+                      "expanded": false,
+                      "_localId": "rsr78fu1sxhx",
+                      "_levels": [
+                        {
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "label": "Min"
+                        },
+                        {
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "label": "Max"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "mac_01_dd",
+                      "name": "RSSI 01:dd",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": true,
+                      "factor": 1,
+                      "children": [
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx-2u3ll-262z2.levels.0",
+                          "name": "Min",
+                          "active": true,
+                          "type": "level",
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "children": []
+                        },
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx-2u3ll-262z2.levels.1",
+                          "name": "Max",
+                          "active": true,
+                          "type": "level",
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "children": []
+                        }
+                      ],
+                      "_parentId": "beacon"
+                    },
+                    {
+                      "id": "mac_08_cd",
+                      "name": "RSSI 08:cd",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": true,
+                      "factor": 1,
+                      "children": [
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx-2u3ll-262z2-bgybg.levels.0",
+                          "name": "Min",
+                          "active": true,
+                          "type": "level",
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "children": []
+                        },
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx-2u3ll-262z2-bgybg.levels.1",
+                          "name": "Max",
+                          "active": true,
+                          "type": "level",
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "children": []
+                        }
+                      ],
+                      "_parentId": "rssi"
+                    },
+                    {
+                      "id": "mac_0e_60",
+                      "name": "RSSI 0e:60",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": true,
+                      "factor": 1,
+                      "children": [
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx-2u3ll-262z2-bgybg-3y83h.levels.0",
+                          "name": "Min",
+                          "active": true,
+                          "type": "level",
+                          "index": 0,
+                          "value": -127,
+                          "color": "#2d3945",
+                          "children": []
+                        },
+                        {
+                          "id": "mac_98_12-dr6h3-r2vr8-igzcx-2u3ll-262z2-bgybg-3y83h.levels.1",
+                          "name": "Max",
+                          "active": true,
+                          "type": "level",
+                          "index": 1,
+                          "value": 0,
+                          "color": "#a2ce4b",
+                          "children": []
+                        }
+                      ],
+                      "_parentId": "rssi"
+                    }
+                  ]
+                },
+                {
+                  "id": "dinstances",
+                  "name": "Расстояния до маяков",
+                  "active": true,
+                  "type": "subsystem",
+                  "children": [
+                    {
+                      "id": "dist_98_12",
+                      "name": "98:12",
+                      "active": true,
+                      "type": "argument",
+                      "dataType": "number",
+                      "factor": 1,
+                      "linear": false,
+                      "source": "state",
+                      "unit": "length-meter"
+                    },
+                    {
+                      "id": "dist_0a_35",
+                      "name": "0a:35",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": false,
+                      "factor": 1,
+                      "unit": "length-meter",
+                      "_parentId": "dinstances",
+                      "children": []
+                    },
+                    {
+                      "id": "dist_29_39",
+                      "name": "29:39",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": false,
+                      "factor": 1,
+                      "unit": "length-meter",
+                      "_parentId": "dinstances",
+                      "children": []
+                    },
+                    {
+                      "id": "dist_d3_96",
+                      "name": "d3:96",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": false,
+                      "factor": 1,
+                      "unit": "length-meter",
+                      "_parentId": "dinstances",
+                      "children": []
+                    },
+                    {
+                      "id": "dist_f7_41",
+                      "name": "f7:41",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": false,
+                      "factor": 1,
+                      "unit": "length-meter",
+                      "_parentId": "dinstances",
+                      "children": []
+                    },
+                    {
+                      "id": "dist_01_dd",
+                      "name": "01:dd",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": false,
+                      "factor": 1,
+                      "unit": "length-meter",
+                      "_parentId": "dinstances",
+                      "children": []
+                    },
+                    {
+                      "id": "dist_08_cd",
+                      "name": "08:cd",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": false,
+                      "factor": 1,
+                      "unit": "length-meter",
+                      "_parentId": "dinstances",
+                      "children": []
+                    },
+                    {
+                      "id": "dist_0e_60",
+                      "name": "0e:60",
+                      "active": true,
+                      "type": "argument",
+                      "source": "state",
+                      "dataType": "number",
+                      "linear": false,
+                      "factor": 1,
+                      "unit": "length-meter",
+                      "_parentId": "dinstances",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "mqtt-last",
+              "name": "Last MQTT Publish",
+              "active": true,
+              "type": "subsystem",
+              "children": [
+                {
+                  "id": "topic",
+                  "name": "Topic",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "string",
+                  "reference": "topic",
+                  "_parentId": "mqtt-last"
+                },
+                {
+                  "id": "payload",
+                  "name": "Payload",
+                  "active": true,
+                  "type": "argument",
+                  "source": "state",
+                  "dataType": "string",
+                  "reference": "payload",
+                  "_parentId": "mqtt-last"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cmds",
+          "name": "Commands",
+          "active": true,
+          "type": "subsystem",
+          "children": [
+            {
+              "id": "activate",
+              "name": "Активировать костюм",
+              "active": true,
+              "type": "action",
+              "service": "ric-gate",
+              "command": "publish",
+              "params": {
+                "topic": "base/costume/activate",
+                "payload": "1"
+              },
+              "description": null
+            },
+            {
+              "id": "deactivate",
+              "name": "Деактивировать костюм",
+              "active": true,
+              "type": "action",
+              "service": "ric-gate",
+              "command": "publish",
+              "params": {
+                "topic": "base/costume/activate",
+                "payload": "0"
+              },
+              "description": null,
+              "children": []
+            }
+          ]
+        }
+      ],
+      "_isRoot": true
+    },
+    "props": {
+      "bots": true,
+      "hardwareEvents": false,
+      "helper": {
+        "nostate": "@ric-docs/docs/helpers/mqtt.md"
+      },
+      "prefix": "",
+      "order": 1,
+      "typeInput": {
+        "hidden": false
+      },
+      "statusInput": {
+        "hidden": false
+      },
+      "descriptionInput": {
+        "hidden": false
+      },
+      "defaultNode": "temperature",
+      "protocol": "mqtt",
+      "idPattern": "mqtt-$tagname-$nanoid",
+      "namePattern": "mqtt-$tagname-$nanoid",
+      "idInput": {
+        "label": "ClientId"
+      },
+      "auth": {
+        "title": "mqtt_auth",
+        "fields": {
+          "username": {
+            "title": "mqtt_username"
+          },
+          "password": {
+            "secret": true,
+            "title": "mqtt_password"
+          }
+        }
+      },
+      "x509": {
+        "enabled": true
+      },
+      "parserParams": {
+        "saveBinaryAs": {
+          "ctrl": "Select",
+          "opts": {
+            "options": [
+              {
+                "value": "",
+                "label": "Text"
+              },
+              {
+                "value": "base64",
+                "label": "Base64"
+              },
+              {
+                "value": "hex",
+                "label": "HEX"
+              }
+            ]
+          },
+          "defaultValue": "",
+          "when": {
+            "==": [
+              {
+                "var": "node.dataType"
+              },
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
