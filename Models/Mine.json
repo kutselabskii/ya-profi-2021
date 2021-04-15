@@ -1,7 +1,7 @@
 {
   "version": 1,
   "origin": "sandbox.rightech.io",
-  "time": "2021-04-15T12:24:46.026Z",
+  "time": "2021-04-15T12:30:12.406Z",
   "user": "60490ec253072efc4bfd2252",
   "group": "60490ec253072efc4bfd2251",
   "store": "models",
@@ -395,29 +395,59 @@
           "type": "subsystem",
           "children": [
             {
-              "id": "led-on",
-              "name": "Turn-on LED",
+              "id": "buzzer_on",
+              "name": "Включить сирену",
               "active": true,
               "type": "action",
               "service": "ric-gate",
               "command": "publish",
               "params": {
-                "topic": "base/relay/led1",
+                "topic": "base/mine/buzzer",
                 "payload": "1"
               },
               "description": null
             },
             {
-              "id": "led-off",
-              "name": "Turn-off LED",
+              "id": "buzzer_off",
+              "name": "Выключить сирену",
               "active": true,
               "type": "action",
               "service": "ric-gate",
               "command": "publish",
               "params": {
-                "topic": "base/relay/led1",
+                "topic": "base/mine/buzzer",
                 "payload": "0"
-              }
+              },
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "ventilation_on",
+              "name": "Включить вентиляцию",
+              "active": true,
+              "type": "action",
+              "service": "ric-gate",
+              "command": "publish",
+              "params": {
+                "topic": "base/mine/ventilation",
+                "payload": "1"
+              },
+              "description": null,
+              "children": []
+            },
+            {
+              "id": "ventilation_off",
+              "name": "Выключить вентиляцию",
+              "active": true,
+              "type": "action",
+              "service": "ric-gate",
+              "command": "publish",
+              "params": {
+                "topic": "base/mine/ventilation",
+                "payload": "0"
+              },
+              "description": null,
+              "children": []
             }
           ]
         }
