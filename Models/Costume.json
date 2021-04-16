@@ -1,7 +1,7 @@
 {
   "version": 1,
   "origin": "sandbox.rightech.io",
-  "time": "2021-04-15T12:13:14.272Z",
+  "time": "2021-04-16T11:09:29.814Z",
   "user": "60490ec253072efc4bfd2252",
   "group": "60490ec253072efc4bfd2251",
   "store": "models",
@@ -122,7 +122,7 @@
                   "dataType": "number",
                   "factor": 1,
                   "linear": false,
-                  "source": "state",
+                  "source": "config",
                   "unit": "energy-kilowatt-hour"
                 },
                 {
@@ -130,13 +130,23 @@
                   "name": "Мощность в течение часа",
                   "active": true,
                   "type": "argument",
-                  "source": "state",
+                  "source": "config",
                   "dataType": "number",
                   "linear": false,
                   "factor": 1,
                   "unit": "power-kilowatt",
                   "_parentId": "costume_params",
                   "children": []
+                },
+                {
+                  "id": "time_left",
+                  "name": "Запас заряда",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": false,
+                  "source": "state"
                 }
               ]
             },
@@ -1077,7 +1087,7 @@
         },
         {
           "id": "cmds",
-          "name": "Commands",
+          "name": "Команды",
           "active": true,
           "type": "subsystem",
           "children": [
