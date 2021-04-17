@@ -6,7 +6,7 @@
  * @param {number} power third
  */
  function process(charge, capacity, power) {
-  if (!charge) {
+  if (!charge || !capacity || !power) {
     return {}
   }
 

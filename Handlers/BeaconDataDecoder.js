@@ -3,7 +3,11 @@
  * @author `iprofi-369937608`
  * @param {string} data encoded data from beacon
  */
-function process(data) {
+ function process(data) {
+  if (!data) {
+    return {}
+  }
+
   const view = ric.base64.decode(data);
 
   const latitude = view.getFloat32(0, true);
@@ -12,12 +16,14 @@ function process(data) {
   const time = view.getInt32(12, true)
   const amount = view.getUint8(16);
 
-  const hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "A", "B", "C", "D", "E", "F"];
+  const hexChar = ["0", "1", "2", "3", "4", "5", "6", "7","8", "9", "a", "b", "c", "d", "e", "f"];
 
   var byte2hex = 
     function byte2hex(b) {
       return hexChar[(b >> 4) & 0x0f] + hexChar[b & 0x0f];
     };
+
+  ric.localStore.forObject
 
   let rssi9812 = -127;
   let rssi0a35 = -127;
