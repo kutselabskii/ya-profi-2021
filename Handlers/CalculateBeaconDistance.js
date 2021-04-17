@@ -1,9 +1,9 @@
 /**
  * Calculates distance to each beacon
  * @author `iprofi-369937608`
- * @param {object} x X
- * @param {object} y Y
- * @param {object} z Z
+ * @param {number} x X
+ * @param {number} y Y
+ * @param {number} z Z
  */
  function process(x, y, z) {
   if (!x || !y || !z) {
