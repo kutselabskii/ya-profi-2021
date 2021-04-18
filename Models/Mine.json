@@ -1,7 +1,7 @@
 {
   "version": 1,
   "origin": "sandbox.rightech.io",
-  "time": "2021-04-15T12:30:12.406Z",
+  "time": "2021-04-18T07:56:37.565Z",
   "user": "60490ec253072efc4bfd2252",
   "group": "60490ec253072efc4bfd2251",
   "store": "models",
@@ -129,7 +129,8 @@
                       "children": []
                     }
                   ],
-                  "_parentId": "mine_params"
+                  "_parentId": "mine_params",
+                  "reference": "state/ventilation"
                 },
                 {
                   "id": "buzzer",

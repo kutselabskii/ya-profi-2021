@@ -1,7 +1,7 @@
 {
   "version": 1,
   "origin": "sandbox.rightech.io",
-  "time": "2021-04-15T12:35:38.280Z",
+  "time": "2021-04-18T07:56:18.733Z",
   "user": "60490ec253072efc4bfd2252",
   "group": "60490ec253072efc4bfd2251",
   "store": "models",
@@ -149,7 +149,8 @@
                       "value": 5042,
                       "color": "#a2ce4b"
                     }
-                  ]
+                  ],
+                  "reference": "params/adc"
                 },
                 {
                   "id": "buzzer",
@@ -179,6 +180,68 @@
                       "index": 1,
                       "value": true,
                       "color": "#f16059"
+                    }
+                  ]
+                },
+                {
+                  "id": "calibration_table",
+                  "name": "Тарировочная таблица",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "string",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "config",
+                  "unit": null
+                },
+                {
+                  "id": "max_fuel",
+                  "name": "Топливный бак",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "config"
+                },
+                {
+                  "id": "current_fuel",
+                  "name": "Уровень топлива",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state"
+                },
+                {
+                  "id": "current_fuel_percentage",
+                  "name": "Наполненность бака",
+                  "active": true,
+                  "type": "argument",
+                  "dataType": "number",
+                  "factor": 1,
+                  "linear": true,
+                  "source": "state",
+                  "unit": "percent",
+                  "children": [
+                    {
+                      "id": "current_fuel_percentage.levels.0",
+                      "name": "Min",
+                      "active": true,
+                      "type": "level",
+                      "index": 0,
+                      "value": 0,
+                      "color": "#f16059"
+                    },
+                    {
+                      "id": "current_fuel_percentage.levels.1",
+                      "name": "Max",
+                      "active": true,
+                      "type": "level",
+                      "index": 1,
+                      "value": 100,
+                      "color": "#a2ce4b"
                     }
                   ]
                 }
