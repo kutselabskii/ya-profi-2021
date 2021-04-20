@@ -11,3 +11,11 @@ def GetBool() -> bool:
 
 def GetFloat(minValue: float, maxValue: float) -> float:
     return random.uniform(minValue, maxValue)
+
+
+def ReduceInt(value, amount, minValue):
+    return max(value - amount, minValue)
+
+
+def RandomBoolArray(size):
+    return [bool(random.getrandbits(1)) for _ in range(size)]

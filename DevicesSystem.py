@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-from Devices import AirPollutionSensor
+import Devices
 import Common.secrets as sec
 
 
@@ -51,4 +51,7 @@ class DeviceObject:
 
 class Costume(DeviceObject):
     def CreateDevices(self):
-        self.devices.append(AirPollutionSensor(self.client, 5, emulation=True))
+        self.devices.append(Devices.AirPollutionSensor(self.client, 7, emulation=True))
+        self.devices.append(Devices.CostumeParams(self.client, 9, emulation=True))
+        self.devices.append(Devices.Coords(self.client, 11, emulation=True))
+        self.devices.append(Devices.Beacon(self.client, 12, emulation=True))

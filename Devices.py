@@ -1,6 +1,7 @@
 from time import time
 import json
 import Common.Emulation as emu
+import Common.base64encoder as b64
 
 
 class Device:
@@ -16,6 +17,7 @@ class Device:
 
     def Initialize(self):
         self.clock = time()
+        self.Subscribe()
 
     def Update(self):
         t = time()
@@ -24,16 +26,19 @@ class Device:
             return True
         return False
 
-    def Publish(self):
+    def Subscribe(self):
         pass
+
+    def Publish(self):
+        if not self.needPublish:
+            return
+
+        self.needPublish = False
+
+        self.Send()
 
 
 class AirPollutionSensor(Device):
-    def __init__(
-        self, client, clockInterval=1, *, emulation=False
-    ):
-        super().__init__(client, clockInterval, emulation=emulation)
-
     def Initialize(self):
         super().Initialize()
 
@@ -62,14 +67,7 @@ class AirPollutionSensor(Device):
 
             self.needPublish = True
 
-    def Publish(self):
-        if not self.needPublish:
-            return
-
-        super().Publish()
-
-        self.needPublish = False
-
+    def Send(self):
         self.client.publish("environment", json.dumps(
                 {
                     "humidity": self.humidity,
@@ -84,4 +82,100 @@ class AirPollutionSensor(Device):
             )
         )
 
-# class 
+
+class CostumeParams(Device):
+    def Initialize(self):
+        super().Initialize()
+
+        self.active = False
+        self.charge = 100
+        self.needPublish = True
+
+    def Subscribe(self):
+        self.client.on_message = self.OnMessage
+        self.client.subscribe("activation")
+
+    def Update(self):
+        if not super().Update():
+            return
+
+        if self.emulation:
+            if self.active:
+                self.charge = emu.ReduceInt(self.charge, 1, 0)
+
+            self.needPublish = True
+
+    def Send(self):
+        self.client.publish("active", self.active)
+        self.client.publish("charge", self.charge)
+
+    def OnMessage(self, client, userdata, message):
+        data = json.loads(message.payload.decode('utf-8'))
+
+        self.active = data["activate"]
+        self.needPublish = True
+
+
+class Coords(Device):
+    def Initialize(self):
+        super().Initialize()
+
+        self.x = 0
+        self.y = 0
+        self.z = 0
+
+    def Update(self):
+        if not super().Update():
+            return
+
+        if self.emulation:
+            self.x = emu.GetInt(0, 50)
+            self.y = emu.GetInt(0, 50)
+            self.z = emu.GetInt(-30, -25)
+
+            self.needPublish = True
+
+    def Send(self):
+        self.client.publish("coords", json.dumps({
+            "x": self.x,
+            "y": self.y,
+            "z": self.z
+        }))
+
+
+class Beacon(Device):
+    def Initialize(self):
+        super().Initialize()
+
+        self.latitude = 0
+        self.longitude = 0
+        self.altitude = 0
+        self.time = 0
+        self.visible = [False] * 8
+        self.rssi = {'98:12': -127, '0a:35': -127, '29:39': -127, 'd3:96': -127, 'f7:41': -127, '01:dd': -127, '08:cd': -127, '0e:60': -127}
+
+    def Update(self):
+        if not super().Update():
+            return
+
+        if self.emulation:
+            self.latitude = emu.GetFloat(68, 69)
+            self.longitude = emu.GetFloat(64, 66)
+            self.altitude = emu.GetFloat(0.9, 1.75)
+            self.time = round(time())
+            self.visible = emu.RandomBoolArray(8)
+
+            for i, k in enumerate(self.rssi):
+                self.rssi[k] = emu.GetInt(-127, 0) if self.visible[i] else -127
+
+            self.needPublish = True
+
+    def Send(self):
+        data = {}
+        for k in self.rssi.keys():
+            if self.rssi[k] > -127:
+                data[k] = self.rssi[k]
+        self.client.publish(
+            "beacon",
+            b64.encode(self.latitude, self.longitude, self.altitude, self.time, data)
+        )

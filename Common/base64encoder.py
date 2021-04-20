@@ -37,5 +37,5 @@ def encode(latitude, longitude, altitude, time, rssi):
 
 
 if __name__ == "__main__":
-    print(decode("CtSLQu35ckJmZoY/vpUOYAgSmIY1CvQ5KQCW0/9B9+LdAZzNCM5gA+w="))
+    print(decode("iSSIQsCIgkJOfd0/ZrZ+YAUSmKGW04pB9/7NCORgDuc="))
     print(encode(68, 65, 1, 1611568572, {'98:12': -120, '0a:35': -120, '29:39': 0, 'd3:96': -10, 'f7:41': -35, '01:dd': -110, '08:cd': -55, '0e:60': -24}))
