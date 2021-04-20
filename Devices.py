@@ -1,28 +1,21 @@
 from time import time
 import json
-import paho.mqtt.client as mqtt
 import Common.Emulation as emu
 
 
 class Device:
     def __init__(
-        self, clientId: str, clockInterval: int = 1, *, emulation=False
+        self, client, clockInterval=1, *, emulation=False
     ):
-        self.clientId = clientId
+        self.client = client
         self.emulation = emulation
         self.clockInterval = clockInterval
         self.needPublish = False
-        self.needRender = False
 
         self.Initialize()
 
     def Initialize(self):
         self.clock = time()
-        self.client = mqtt.Client(self.clientId)
-        self.client.connect("sandbox.rightech.io")
-        self.client.loop_start()
-
-        self.needRender = True
 
     def Update(self):
         t = time()
@@ -37,9 +30,9 @@ class Device:
 
 class AirPollutionSensor(Device):
     def __init__(
-        self, clientId: str, clockInterval: int = 1, *, emulation=False
+        self, client, clockInterval=1, *, emulation=False
     ):
-        super().__init__(clientId, clockInterval, emulation=emulation)
+        super().__init__(client, clockInterval, emulation=emulation)
 
     def Initialize(self):
         super().Initialize()
@@ -90,3 +83,5 @@ class AirPollutionSensor(Device):
                 }
             )
         )
+
+# class 
