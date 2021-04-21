@@ -146,7 +146,7 @@ class BuzzerView(DeviceView):
 
     def ToggleActive(self):
         isActive = self.active.get()
-        RunCommand(self.objectId, "buzzer_off" if isActive else "buzzer_on")
+        RunCommand(self.objectId, f"buzzer_off" if isActive else f"buzzer_on")
 
     def Update(self, data):
         self.active.set(data["buzzer"])
