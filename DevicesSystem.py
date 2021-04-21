@@ -16,6 +16,7 @@ class System:
     def CreateObjects(self):
         self.objects.append(Costume(sec.CostumeClientId))
         self.objects.append(Helicopter(sec.HelicopterClientId))
+        self.objects.append(Mine(sec.MineClientId))
 
     def LoopForever(self):
         while True:
@@ -63,3 +64,15 @@ class Helicopter(DeviceObject):
         self.devices.append(Devices.Buzzer(self.client, 5))
         self.devices.append(Devices.FuelSensor(self.client, 6, emulation=True))
         self.devices.append(Devices.GPS(self.client, 10, emulation=True))
+
+
+class Mine(DeviceObject):
+    def CreateDevices(self):
+        self.devices.append(Devices.Buzzer(self.client, 5))
+        self.devices.append(Devices.Ventilation(self.client, 7))
+        self.devices.append(Devices.Power(self.client, 20))
+        self.devices.append(Devices.NoiseSensor(self.client, 6, emulation=True))
+        for i in range(2):
+            self.devices.append(Devices.Thermometer(self.client, i, 7, emulation=True))
+        for i in range(4):
+            self.devices.append(Devices.MovementSensor(self.client, i, 8, emulation=True))

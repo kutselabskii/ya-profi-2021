@@ -194,8 +194,36 @@ class Buzzer(Device):
         self.client.on_message = self.OnMessage
         self.client.subscribe("buzzer_activation")
 
+    def Update(self):
+        if not super().Update():
+            return
+
     def Send(self):
         self.client.publish("buzzer", self.buzzer)
+
+    def OnMessage(self, client, userdata, message):
+        data = json.loads(message.payload.decode('utf-8'))
+        print("oops")
+        self.buzzer = data["activate"]
+        self.needPublish = True
+
+
+class Ventilation(Device):
+    def Initialize(self):
+        super().Initialize()
+        self.ventilation = False
+
+    def Subscribe(self):
+        self.client.on_message = self.OnMessage
+        self.client.subscribe("ventilation_activation")
+
+    def Update(self):
+        if not super().Update():
+            return
+
+    def Send(self):
+        self.client.publish("ventilation", self.buzzer)
+        self.needPublish = True
 
     def OnMessage(self, client, userdata, message):
         data = json.loads(message.payload.decode('utf-8'))
@@ -239,3 +267,79 @@ class GPS(Device):
     def Send(self):
         self.client.publish("lat", self.latitude)
         self.client.publish("lon", self.longitude)
+
+
+class Power(Device):
+    def Initialize(self):
+        super().Initialize()
+        self.active = True
+
+    def Update(self):
+        if not super().Update():
+            return
+
+    def Send(self):
+        self.client.publish("electro", self.active)
+
+
+class NoiseSensor(Device):
+    def Initialize(self):
+        super().Initialize()
+        self.noise = 0
+
+    def Update(self):
+        if not super().Update():
+            return
+
+        if self.emulation:
+            self.noise = emu.GetInt(0, 80)
+            self.needPublish = True
+
+    def Send(self):
+        self.client.publish("noise", self.noise)
+
+
+class Thermometer(Device):
+    def __init__(
+        self, client, index, clockInterval=1, *, emulation=False
+    ):
+        super().__init__(client, clockInterval, emulation=emulation)
+        self.index = index
+
+    def Initialize(self):
+        super().Initialize()
+        self.temperature = 0
+
+    def Update(self):
+        if not super().Update():
+            return
+
+        if self.emulation:
+            self.temperature = emu.GetFloat(15, 60)
+            self.needPublish = True
+
+    def Send(self):
+        self.client.publish(f"temp{self.index}", self.temperature)
+
+
+class MovementSensor(Device):
+    def __init__(
+        self, client, index, clockInterval=1, *, emulation=False
+    ):
+        super().__init__(client, clockInterval, emulation=emulation)
+        self.index = index
+
+    def Initialize(self):
+        super().Initialize()
+        self.movement = False
+
+    def Update(self):
+        if not super().Update():
+            return
+
+        if self.emulation:
+            self.movement = emu.GetBool()
+            self.needPublish = True
+
+    def Send(self):
+        self.client.publish(f"move{self.index}", self.movement)
