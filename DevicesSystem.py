@@ -68,11 +68,11 @@ class Helicopter(DeviceObject):
 
 class Mine(DeviceObject):
     def CreateDevices(self):
-        self.devices.append(Devices.Buzzer(self.client, 5))
-        self.devices.append(Devices.Ventilation(self.client, 7))
+        self.devices.append(Devices.Buzzer(self.client, 7))
+        self.devices.append(Devices.Ventilation(self.client, 9))
         self.devices.append(Devices.Power(self.client, 20))
-        self.devices.append(Devices.NoiseSensor(self.client, 6, emulation=True))
+        self.devices.append(Devices.NoiseSensor(self.client, 12, emulation=True))
         for i in range(2):
-            self.devices.append(Devices.Thermometer(self.client, i, 7, emulation=True))
+            self.devices.append(Devices.Thermometer(self.client, i, 15, emulation=True))
         for i in range(4):
-            self.devices.append(Devices.MovementSensor(self.client, i, 8, emulation=True))
+            self.devices.append(Devices.MovementSensor(self.client, i, 10, emulation=True))

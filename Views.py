@@ -170,6 +170,68 @@ class BuzzerView(DeviceView):
         self.active.set(data["buzzer"])
 
 
+class VentilationView(DeviceView):
+    def Initialize(self):
+        self.title = Label(self, text="Вентиляция")
+        self.title.grid(row=0, column=0, columnspan=4)
+
+        row = 1
+        self.active = MakeVariable(self, "Включена", row, 0, row, 1, variable_type=BooleanVar)
+        button = Button(self, text="Переключить вентиляцию", command=self.ToggleActive)
+        button.grid(row=row, column=2, columnspan=2)
+
+    def ToggleActive(self):
+        isActive = self.active.get()
+        RunCommand(self.objectId, "ventilation_off" if isActive else "ventilation_on")
+
+    def Update(self, data):
+        self.active.set(data["ventilation"])
+
+
+class PowerView(DeviceView):
+    def Initialize(self):
+        self.title = Label(self, text="Электропитание")
+        self.title.grid(row=0, column=0, columnspan=2)
+
+        row = 1
+        self.active = MakeVariable(self, "Включено", row, 0, row, 1, variable_type=BooleanVar)
+
+    def Update(self, data):
+        self.active.set(data["electro"])
+
+
+class ThermometerView(DeviceView):
+    def __init__(self, master, index, width, height, objectId=""):
+        super().__init__(master, width, height, objectId)
+        self.index = index
+
+    def Initialize(self):
+        self.title = Label(self, text=f"Термометр {self.index + 1}")
+        self.title.grid(row=0, column=0, columnspan=2)
+
+        row = 1
+        self.temperature = MakeVariable(self, "Температура", row, 0, row, 1, variable_type=DoubleVar)
+
+    def Update(self, data):
+        self.temperature.set(data[f"temp{self.index}"])
+
+
+class MovementView(DeviceView):
+    def __init__(self, master, index, width, height, objectId=""):
+        super().__init__(master, width, height, objectId)
+        self.index = index
+
+    def Initialize(self):
+        self.title = Label(self, text=f"Датчик движения {self.index + 1}")
+        self.title.grid(row=0, column=0, columnspan=2)
+
+        row = 1
+        self.movement = MakeVariable(self, "Движение", row, 0, row, 1, variable_type=BooleanVar)
+
+    def Update(self, data):
+        self.movement.set(data[f"move{self.index}"])
+
+
 def MakeVariable(
         root,
         title,
