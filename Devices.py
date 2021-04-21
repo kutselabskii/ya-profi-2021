@@ -211,13 +211,15 @@ class Buzzer(Device):
             GPIO.output(self.ledPin, GPIO.LOW)
 
     def Subscribe(self):
-        self.client.on_message = self.OnMessage
         self.client.subscribe("buzzer_activation")
+        self.client.message_callback_add("buzzer_activation", self.OnMessage)
 
     def Update(self):
         if not super().Update():
             return
             
+        self.needPublish = True
+        
         if sec.Raspberry:
             GPIO.output(self.ledPin, GPIO.HIGH if self.buzzer else GPIO.LOW)
 
@@ -227,6 +229,8 @@ class Buzzer(Device):
     def OnMessage(self, client, userdata, message):
         data = json.loads(message.payload.decode('utf-8'))
         self.buzzer = data["activate"]
+        if sec.Raspberry:
+            GPIO.output(self.ledPin, GPIO.HIGH if self.buzzer else GPIO.LOW)
         self.needPublish = True
 
 
@@ -236,29 +240,33 @@ class Ventilation(Device):
         self.ventilation = False
         
         if sec.Raspberry:
-            self.ventPin = 15
+            self.ventPin = 18
             GPIO.setup(self.ventPin, GPIO.OUT)
             GPIO.output(self.ventPin, GPIO.LOW)
 
     def Subscribe(self):
-        self.client.on_message = self.OnMessage
         self.client.subscribe("ventilation_activation")
+        self.client.message_callback_add("ventilation_activation", self.OnMessage)
 
     def Update(self):
         if not super().Update():
             return
+        
+        self.needPublish = True
             
         if sec.Raspberry:
             GPIO.output(self.ventPin, GPIO.HIGH if self.ventilation else GPIO.LOW)
 
     def Send(self):
-        self.client.publish("ventilation", self.buzzer)
+        self.client.publish("ventilation", self.ventilation)
 
     def OnMessage(self, client, userdata, message):
         data = json.loads(message.payload.decode('utf-8'))
 
-        self.buzzer = data["activate"]
+        self.ventilation = data["activate"]
         self.needPublish = True
+        if sec.Raspberry:
+            GPIO.output(self.ventPin, GPIO.HIGH if self.ventilation else GPIO.LOW)
 
 
 class FuelSensor(Device):
