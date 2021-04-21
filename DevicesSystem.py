@@ -15,6 +15,7 @@ class System:
 
     def CreateObjects(self):
         self.objects.append(Costume(sec.CostumeClientId))
+        self.objects.append(Helicopter(sec.HelicopterClientId))
 
     def LoopForever(self):
         while True:
@@ -55,3 +56,10 @@ class Costume(DeviceObject):
         self.devices.append(Devices.CostumeParams(self.client, 9, emulation=True))
         self.devices.append(Devices.Coords(self.client, 11, emulation=True))
         self.devices.append(Devices.Beacon(self.client, 12, emulation=True))
+
+
+class Helicopter(DeviceObject):
+    def CreateDevices(self):
+        self.devices.append(Devices.Buzzer(self.client, 5))
+        self.devices.append(Devices.FuelSensor(self.client, 6, emulation=True))
+        self.devices.append(Devices.GPS(self.client, 10, emulation=True))

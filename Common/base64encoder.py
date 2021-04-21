@@ -9,7 +9,7 @@ def decode(s):
     latitude = struct.unpack("<f", bytes[:4])[0]
     longitude = struct.unpack("<f", bytes[4:8])[0]
     altitude = struct.unpack("<f", bytes[8:12])[0]
-    time = datetime.utcfromtimestamp(struct.unpack("<i", bytes[12:16])[0])
+    time = datetime.fromtimestamp(struct.unpack("<i", bytes[12:16])[0])
     amount = struct.unpack("<B", bytes[16:17])[0]
 
     rssi = {}

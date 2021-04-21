@@ -2,6 +2,10 @@ from time import time
 import json
 import Common.Emulation as emu
 import Common.base64encoder as b64
+import Common.secrets as sec
+
+if sec.Raspberry:
+    import RPi.GPIO as GPIO
 
 
 class Device:
@@ -179,3 +183,59 @@ class Beacon(Device):
             "beacon",
             b64.encode(self.latitude, self.longitude, self.altitude, self.time, data)
         )
+
+
+class Buzzer(Device):
+    def Initialize(self):
+        super().Initialize()
+        self.buzzer = False
+
+    def Subscribe(self):
+        self.client.on_message = self.OnMessage
+        self.client.subscribe("buzzer_activation")
+
+    def Send(self):
+        self.client.publish("buzzer", self.buzzer)
+
+    def OnMessage(self, client, userdata, message):
+        data = json.loads(message.payload.decode('utf-8'))
+
+        self.buzzer = data["activate"]
+        self.needPublish = True
+
+
+class FuelSensor(Device):
+    def Initialize(self):
+        super().Initialize()
+        self.adc = 5042
+
+    def Update(self):
+        if not super().Update():
+            return
+
+        if self.emulation:
+            self.adc = emu.ReduceInt(self.adc, 11, 0)
+            self.needPublish = True
+
+    def Send(self):
+        self.client.publish("adc", self.adc)
+
+
+class GPS(Device):
+    def Initialize(self):
+        super().Initialize()
+        self.latitude = 0
+        self.longitude = 0
+
+    def Update(self):
+        if not super().Update():
+            return
+
+        if self.emulation:
+            self.latitude = emu.GetFloat(64, 67)
+            self.longitude = emu.GetFloat(60, 68)
+            self.needPublish = True
+
+    def Send(self):
+        self.client.publish("lat", self.latitude)
+        self.client.publish("lon", self.longitude)

@@ -4,6 +4,7 @@ import requests
 from tkinter import *
 from tkinter.ttk import *
 import Common.secrets as sec
+import Common.base64encoder as b64
 
 API_LINK = "https://sandbox.rightech.io/api/v1"
 
@@ -95,6 +96,29 @@ class CoordinatesView(DeviceView):
         # for d in ddist.keys():
         #     s += f"{d}: {ddist[d]}, "
         # self.distance.set(s[:-2])
+
+
+class BeaconView(DeviceView):
+    def Initialize(self):
+        self.title = Label(self, text="Данные от Beacon")
+        self.title.grid(row=0, column=0, columnspan=6)
+
+        row = 1
+        self.latitude = MakeVariable(self, "Широта", row, 0, row, 1, variable_type=DoubleVar)
+        self.longitude = MakeVariable(self, "Долгота", row, 2, row, 3, variable_type=DoubleVar)
+        self.altitude = MakeVariable(self, "Высота", row, 4, row, 5, variable_type=DoubleVar)
+        row += 1
+        self.event_time = MakeVariable(self, "Время", row, 0, row, 1)
+        self.count = MakeVariable(self, "Видимые маячки", row, 2, row, 3, variable_type=IntVar)
+
+    def Update(self, data):
+        lat, lon, alt, t, amount, _ = b64.decode(data["beacons"])
+
+        self.latitude.set(round(lat, 4))
+        self.longitude.set(round(lon, 4))
+        self.altitude.set(round(alt, 3))
+        self.event_time.set(t)  # already in local time
+        self.count.set(amount)
 
 
 def MakeVariable(

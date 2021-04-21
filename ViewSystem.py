@@ -93,5 +93,9 @@ class Costume(ViewObject):
         self.views.append(self.costumeParams)
 
         self.coordinatesView = Views.CoordinatesView(self, 300, 100, objectId=sec.CostumeApiId)
-        self.coordinatesView.grid(row=0, column=3)
+        self.coordinatesView.grid(row=1, column=0)
         self.views.append(self.coordinatesView)
+
+        self.beacon = Views.BeaconView(self, 300, 200, objectId=sec.CostumeApiId)
+        self.beacon.grid(row=1, column=1)
+        self.views.append(self.beacon)
