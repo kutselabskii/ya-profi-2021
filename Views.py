@@ -121,6 +121,55 @@ class BeaconView(DeviceView):
         self.count.set(amount)
 
 
+class GPS(DeviceView):
+    def Initialize(self):
+        self.title = Label(self, text="GPS")
+        self.title.grid(row=0, column=0, columnspan=4)
+
+        row = 1
+        self.latitude = MakeVariable(self, "Широта", row, 0, row, 1, variable_type=DoubleVar)
+        self.longitude = MakeVariable(self, "Долгота", row, 2, row, 3, variable_type=DoubleVar)
+
+    def Update(self, data):
+        self.latitude.set(round(data["lat"], 4))
+        self.longitude.set(round(data["lon"], 4))
+
+
+class FuelView(DeviceView):
+    def Initialize(self):
+        self.title = Label(self, text="Топливные показатели")
+        self.title.grid(row=0, column=0, columnspan=4)
+
+        row = 1
+        self.fuel = MakeVariable(self, "Литры", row, 0, row, 1, variable_type=DoubleVar)
+        self.percentage = MakeVariable(self, "Остаток в процентах", row, 2, row, 3, variable_type=DoubleVar)
+
+    def Update(self, data):
+        if data["fuel"] is None:
+            return
+
+        self.fuel.set(round(data["fuel"], 2))
+        self.percentage.set(round(data["current_fuel_percentage"], 2))
+
+
+class BuzzerView(DeviceView):
+    def Initialize(self):
+        self.title = Label(self, text="Сирена")
+        self.title.grid(row=0, column=0, columnspan=4)
+
+        row = 1
+        self.active = MakeVariable(self, "Включена", row, 0, row, 1, variable_type=BooleanVar)
+        button = Button(self, text="Переключить сирену", command=self.ToggleActive)
+        button.grid(row=row, column=2, columnspan=2)
+
+    def ToggleActive(self):
+        isActive = self.active.get()
+        RunCommand(self.objectId, "buzzer_off" if isActive else "buzzer_on")
+
+    def Update(self, data):
+        self.active.set(data["buzzer"])
+
+
 def MakeVariable(
         root,
         title,

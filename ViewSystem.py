@@ -26,6 +26,7 @@ class System:
 
     def CreateObjects(self):
         self.objects.append(Costume(sec.CostumeApiId, self.root))
+        self.objects.append(Helicopter(sec.HelicopterApiId, self.root))
 
     def LoopForever(self):
         while True:
@@ -99,3 +100,18 @@ class Costume(ViewObject):
         self.beacon = Views.BeaconView(self, 300, 200, objectId=sec.CostumeApiId)
         self.beacon.grid(row=1, column=1)
         self.views.append(self.beacon)
+
+
+class Helicopter(ViewObject):
+    def CreateViews(self):
+        self.gps = Views.GPS(self, 300, 150, objectId=sec.HelicopterApiId)
+        self.gps.grid(row=0, column=0)
+        self.views.append(self.gps)
+
+        self.fuel = Views.FuelView(self, 300, 150, objectId=sec.HelicopterApiId)
+        self.fuel.grid(row=0, column=1)
+        self.views.append(self.fuel)
+
+        self.buzzer = Views.BuzzerView(self, 300, 150, objectId=sec.HelicopterApiId)
+        self.buzzer.grid(row=1, column=0)
+        self.views.append(self.buzzer)
