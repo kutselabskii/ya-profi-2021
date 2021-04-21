@@ -6,6 +6,8 @@ import Common.secrets as sec
 
 if sec.Raspberry:
     import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
 
 
 class Device:
@@ -37,9 +39,8 @@ class Device:
         if not self.needPublish:
             return
 
-        self.needPublish = False
-
         self.Send()
+        self.needPublish = False
 
 
 class AirPollutionSensor(Device):
@@ -94,6 +95,12 @@ class CostumeParams(Device):
         self.active = False
         self.charge = 100
         self.needPublish = True
+        
+        self.ledPin = 14
+        
+        if sec.Raspberry:
+            GPIO.setup(self.ledPin, GPIO.OUT)
+            GPIO.output(self.ledPin, GPIO.LOW)
 
     def Subscribe(self):
         self.client.on_message = self.OnMessage
@@ -108,6 +115,9 @@ class CostumeParams(Device):
                 self.charge = emu.ReduceInt(self.charge, 1, 0)
 
             self.needPublish = True
+        
+        if sec.Raspberry:
+            GPIO.output(self.ledPin, GPIO.HIGH if self.active else GPIO.LOW)
 
     def Send(self):
         self.client.publish("active", self.active)
@@ -186,9 +196,19 @@ class Beacon(Device):
 
 
 class Buzzer(Device):
+    def __init__(
+        self, client, pin, clockInterval=1, *, emulation=False
+    ):
+        self.ledPin = pin
+        super().__init__(client, clockInterval, emulation=emulation)
+    
     def Initialize(self):
         super().Initialize()
         self.buzzer = False
+        
+        if sec.Raspberry:
+            GPIO.setup(self.ledPin, GPIO.OUT)
+            GPIO.output(self.ledPin, GPIO.LOW)
 
     def Subscribe(self):
         self.client.on_message = self.OnMessage
@@ -197,13 +217,15 @@ class Buzzer(Device):
     def Update(self):
         if not super().Update():
             return
+            
+        if sec.Raspberry:
+            GPIO.output(self.ledPin, GPIO.HIGH if self.buzzer else GPIO.LOW)
 
     def Send(self):
         self.client.publish("buzzer", self.buzzer)
 
     def OnMessage(self, client, userdata, message):
         data = json.loads(message.payload.decode('utf-8'))
-        print("oops")
         self.buzzer = data["activate"]
         self.needPublish = True
 
@@ -212,6 +234,11 @@ class Ventilation(Device):
     def Initialize(self):
         super().Initialize()
         self.ventilation = False
+        
+        if sec.Raspberry:
+            self.ventPin = 15
+            GPIO.setup(self.ventPin, GPIO.OUT)
+            GPIO.output(self.ventPin, GPIO.LOW)
 
     def Subscribe(self):
         self.client.on_message = self.OnMessage
@@ -220,10 +247,12 @@ class Ventilation(Device):
     def Update(self):
         if not super().Update():
             return
+            
+        if sec.Raspberry:
+            GPIO.output(self.ventPin, GPIO.HIGH if self.ventilation else GPIO.LOW)
 
     def Send(self):
         self.client.publish("ventilation", self.buzzer)
-        self.needPublish = True
 
     def OnMessage(self, client, userdata, message):
         data = json.loads(message.payload.decode('utf-8'))

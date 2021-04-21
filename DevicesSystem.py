@@ -61,14 +61,14 @@ class Costume(DeviceObject):
 
 class Helicopter(DeviceObject):
     def CreateDevices(self):
-        self.devices.append(Devices.Buzzer(self.client, 5))
+        self.devices.append(Devices.Buzzer(self.client, 23, 5))
         self.devices.append(Devices.FuelSensor(self.client, 6, emulation=True))
         self.devices.append(Devices.GPS(self.client, 10, emulation=True))
 
 
 class Mine(DeviceObject):
     def CreateDevices(self):
-        self.devices.append(Devices.Buzzer(self.client, 7))
+        self.devices.append(Devices.Buzzer(self.client, 24, 7))
         self.devices.append(Devices.Ventilation(self.client, 9))
         self.devices.append(Devices.Power(self.client, 20))
         self.devices.append(Devices.NoiseSensor(self.client, 12, emulation=True))
