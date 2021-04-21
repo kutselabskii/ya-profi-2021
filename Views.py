@@ -9,12 +9,15 @@ import Common.base64encoder as b64
 API_LINK = "https://sandbox.rightech.io/api/v1"
 
 
-class DeviceView(Frame):
-    def __init__(self, master, width, height, objectId=""):
+class DeviceView(LabelFrame):
+    def __init__(self, master, width, height, objectId="", title=""):
         self.master = master
         self.objectId = objectId
 
-        super().__init__(self.master, width=width, height=height)
+        super().__init__(self.master, width=width, height=height, text=title)
+        self["padding"] = 4
+        self["borderwidth"] = 1
+        self["relief"] = "groove"
 
     def Initialize(self):
         pass
@@ -25,10 +28,7 @@ class DeviceView(Frame):
 
 class AirPollutionView(DeviceView):
     def Initialize(self):
-        self.title = Label(self, text="Состояние воздуха")
-        self.title.grid(row=0, column=0, columnspan=4)
-
-        row = 1
+        row = 0
         self.humidity = MakeVariable(self, "Влажность", row, 0, row, 1, variable_type=IntVar)
         self.oxygen = MakeVariable(self, "Кислород", row, 2, row, 3, variable_type=IntVar)
         row += 1
@@ -54,10 +54,7 @@ class AirPollutionView(DeviceView):
 
 class CostumeParamsView(DeviceView):
     def Initialize(self):
-        self.title = Label(self, text="Параметры костюма")
-        self.title.grid(row=0, column=0, columnspan=4)
-
-        row = 1
+        row = 0
         self.active = MakeVariable(self, "Включен", row, 0, row, 1, variable_type=BooleanVar)
         self.time_left = MakeVariable(self, "Осталось времени", row, 2, row, 3, variable_type=IntVar)
         row += 1
@@ -75,10 +72,7 @@ class CostumeParamsView(DeviceView):
 
 class CoordinatesView(DeviceView):
     def Initialize(self):
-        self.title = Label(self, text="Координаты")
-        self.title.grid(row=0, column=0, columnspan=6)
-
-        row = 1
+        row = 0
         self.x = MakeVariable(self, "X", row, 0, row, 1, variable_type=IntVar)
         self.y = MakeVariable(self, "Y", row, 2, row, 3, variable_type=IntVar)
         self.z = MakeVariable(self, "Z", row, 4, row, 5, variable_type=IntVar)
@@ -100,10 +94,7 @@ class CoordinatesView(DeviceView):
 
 class BeaconView(DeviceView):
     def Initialize(self):
-        self.title = Label(self, text="Данные от Beacon")
-        self.title.grid(row=0, column=0, columnspan=6)
-
-        row = 1
+        row = 0
         self.latitude = MakeVariable(self, "Широта", row, 0, row, 1, variable_type=DoubleVar)
         self.longitude = MakeVariable(self, "Долгота", row, 2, row, 3, variable_type=DoubleVar)
         self.altitude = MakeVariable(self, "Высота", row, 4, row, 5, variable_type=DoubleVar)
@@ -123,10 +114,7 @@ class BeaconView(DeviceView):
 
 class GPS(DeviceView):
     def Initialize(self):
-        self.title = Label(self, text="GPS")
-        self.title.grid(row=0, column=0, columnspan=4)
-
-        row = 1
+        row = 0
         self.latitude = MakeVariable(self, "Широта", row, 0, row, 1, variable_type=DoubleVar)
         self.longitude = MakeVariable(self, "Долгота", row, 2, row, 3, variable_type=DoubleVar)
 
@@ -137,10 +125,7 @@ class GPS(DeviceView):
 
 class FuelView(DeviceView):
     def Initialize(self):
-        self.title = Label(self, text="Топливные показатели")
-        self.title.grid(row=0, column=0, columnspan=4)
-
-        row = 1
+        row = 0
         self.fuel = MakeVariable(self, "Литры", row, 0, row, 1, variable_type=DoubleVar)
         self.percentage = MakeVariable(self, "Остаток в процентах", row, 2, row, 3, variable_type=DoubleVar)
 
@@ -154,10 +139,7 @@ class FuelView(DeviceView):
 
 class BuzzerView(DeviceView):
     def Initialize(self):
-        self.title = Label(self, text="Сирена")
-        self.title.grid(row=0, column=0, columnspan=4)
-
-        row = 1
+        row = 0
         self.active = MakeVariable(self, "Включена", row, 0, row, 1, variable_type=BooleanVar)
         button = Button(self, text="Переключить сирену", command=self.ToggleActive)
         button.grid(row=row, column=2, columnspan=2)
@@ -172,10 +154,7 @@ class BuzzerView(DeviceView):
 
 class VentilationView(DeviceView):
     def Initialize(self):
-        self.title = Label(self, text="Вентиляция")
-        self.title.grid(row=0, column=0, columnspan=4)
-
-        row = 1
+        row = 0
         self.active = MakeVariable(self, "Включена", row, 0, row, 1, variable_type=BooleanVar)
         button = Button(self, text="Переключить вентиляцию", command=self.ToggleActive)
         button.grid(row=row, column=2, columnspan=2)
@@ -190,10 +169,7 @@ class VentilationView(DeviceView):
 
 class PowerView(DeviceView):
     def Initialize(self):
-        self.title = Label(self, text="Электропитание")
-        self.title.grid(row=0, column=0, columnspan=2)
-
-        row = 1
+        row = 0
         self.active = MakeVariable(self, "Включено", row, 0, row, 1, variable_type=BooleanVar)
 
     def Update(self, data):
@@ -201,15 +177,12 @@ class PowerView(DeviceView):
 
 
 class ThermometerView(DeviceView):
-    def __init__(self, master, index, width, height, objectId=""):
-        super().__init__(master, width, height, objectId)
+    def __init__(self, master, index, width, height, objectId="", title=""):
+        super().__init__(master, width, height, objectId, title)
         self.index = index
 
     def Initialize(self):
-        self.title = Label(self, text=f"Термометр {self.index + 1}")
-        self.title.grid(row=0, column=0, columnspan=2)
-
-        row = 1
+        row = 0
         self.temperature = MakeVariable(self, "Температура", row, 0, row, 1, variable_type=DoubleVar)
 
     def Update(self, data):
@@ -217,15 +190,12 @@ class ThermometerView(DeviceView):
 
 
 class MovementView(DeviceView):
-    def __init__(self, master, index, width, height, objectId=""):
-        super().__init__(master, width, height, objectId)
+    def __init__(self, master, index, width, height, objectId="", title=""):
+        super().__init__(master, width, height, objectId, title)
         self.index = index
 
     def Initialize(self):
-        self.title = Label(self, text=f"Датчик движения {self.index + 1}")
-        self.title.grid(row=0, column=0, columnspan=2)
-
-        row = 1
+        row = 0
         self.movement = MakeVariable(self, "Движение", row, 0, row, 1, variable_type=BooleanVar)
 
     def Update(self, data):

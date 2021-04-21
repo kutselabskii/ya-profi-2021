@@ -25,9 +25,9 @@ class System:
             object.Initialize()
 
     def CreateObjects(self):
-        # self.objects.append(Costume(sec.CostumeApiId, self.root))
-        # self.objects.append(Helicopter(sec.HelicopterApiId, self.root))
-        self.objects.append(Mine(sec.MineApiId, self.root))
+        self.objects.append(Costume(sec.CostumeApiId, self.root, "Защитный костюм"))
+        self.objects.append(Helicopter(sec.HelicopterApiId, self.root, "Вертолет"))
+        self.objects.append(Mine(sec.MineApiId, self.root, "Шахта"))
 
     def LoopForever(self):
         while True:
@@ -45,12 +45,15 @@ class System:
         self.closed = True
 
 
-class ViewObject(Frame):
-    def __init__(self, objectId, root):
+class ViewObject(LabelFrame):
+    def __init__(self, objectId, root, title):
         self.objectId = objectId
         self.root = root
 
-        super().__init__(self.root)
+        super().__init__(self.root, text=title)
+        self["padding"] = 10
+        self["borderwidth"] = 2
+        self["relief"] = "groove"
 
         self.views = []
         self.update_interval = 5
@@ -88,19 +91,19 @@ class Costume(ViewObject):
     def CreateViews(self):
         self.update_interval = 5
 
-        self.airPollution = Views.AirPollutionView(self, 300, 300, objectId=sec.CostumeApiId)
+        self.airPollution = Views.AirPollutionView(self, 300, 300, objectId=sec.CostumeApiId, title="Состояние воздуха")
         self.airPollution.grid(row=0, column=0)
         self.views.append(self.airPollution)
 
-        self.costumeParams = Views.CostumeParamsView(self, 300, 150, objectId=sec.CostumeApiId)
+        self.costumeParams = Views.CostumeParamsView(self, 300, 150, objectId=sec.CostumeApiId, title="Параметры костюма")
         self.costumeParams.grid(row=0, column=1)
         self.views.append(self.costumeParams)
 
-        self.coordinatesView = Views.CoordinatesView(self, 300, 100, objectId=sec.CostumeApiId)
+        self.coordinatesView = Views.CoordinatesView(self, 300, 100, objectId=sec.CostumeApiId, title="Координаты")
         self.coordinatesView.grid(row=1, column=0)
         self.views.append(self.coordinatesView)
 
-        self.beacon = Views.BeaconView(self, 300, 200, objectId=sec.CostumeApiId)
+        self.beacon = Views.BeaconView(self, 300, 200, objectId=sec.CostumeApiId, title="Система Beacon")
         self.beacon.grid(row=1, column=1)
         self.views.append(self.beacon)
 
@@ -109,15 +112,15 @@ class Helicopter(ViewObject):
     def CreateViews(self):
         self.update_interval = 10
 
-        self.gps = Views.GPS(self, 300, 150, objectId=self.objectId)
+        self.gps = Views.GPS(self, 300, 150, objectId=self.objectId, title="GPS")
         self.gps.grid(row=0, column=0)
         self.views.append(self.gps)
 
-        self.fuel = Views.FuelView(self, 300, 150, objectId=self.objectId)
+        self.fuel = Views.FuelView(self, 300, 150, objectId=self.objectId, title="Топливные показатели")
         self.fuel.grid(row=0, column=1)
         self.views.append(self.fuel)
 
-        self.buzzer = Views.BuzzerView(self, 300, 150, objectId=self.objectId)
+        self.buzzer = Views.BuzzerView(self, 300, 150, objectId=self.objectId, title="Сирена")
         self.buzzer.grid(row=1, column=0)
         self.views.append(self.buzzer)
 
@@ -126,24 +129,24 @@ class Mine(ViewObject):
     def CreateViews(self):
         self.update_interval = 10
 
-        self.power = Views.PowerView(self, 150, 150, objectId=self.objectId)
+        self.power = Views.PowerView(self, 150, 150, objectId=self.objectId, title="Электропитание")
         self.power.grid(row=0, column=0)
         self.views.append(self.power)
 
-        self.buzzer = Views.BuzzerView(self, 300, 150, objectId=self.objectId)
+        self.buzzer = Views.BuzzerView(self, 300, 150, objectId=self.objectId, title="Сирена")
         self.buzzer.grid(row=0, column=1)
         self.views.append(self.buzzer)
 
-        self.ventilation = Views.VentilationView(self, 300, 150, objectId=self.objectId)
+        self.ventilation = Views.VentilationView(self, 300, 150, objectId=self.objectId, title="Вентиляция")
         self.ventilation.grid(row=0, column=2)
         self.views.append(self.ventilation)
 
         for i in range(2):
-            temp = Views.ThermometerView(self, i, 300, 150, objectId=self.objectId)
+            temp = Views.ThermometerView(self, i, 300, 150, objectId=self.objectId, title=f"Термометр {i + 1}")
             temp.grid(row=1, column=i)
             self.views.append(temp)
 
         for i in range(4):
-            move = Views.MovementView(self, i, 300, 150, objectId=self.objectId)
+            move = Views.MovementView(self, i, 300, 150, objectId=self.objectId, title=f"Датчик движения {i + 1}")
             move.grid(row=2, column=i)
             self.views.append(move)
