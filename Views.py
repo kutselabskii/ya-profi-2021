@@ -66,7 +66,7 @@ class CostumeParamsView(DeviceView):
         RunCommand(self.objectId, "deactivate" if isActive else "activate")
 
     def Update(self, data):
-        self.active.set(data["active"])
+        self.active.set(data["active_state"])
         self.time_left.set(data["time_left"])
 
 
